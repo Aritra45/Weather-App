@@ -19,13 +19,12 @@ const App = () => {
 
   const getWeather = async () => {
     const cityName = query.q ? query.q : 'Current Location';
-    toast.info(`Fatching weather data for ${capitalizeFirstletter(cityName)}`);
+    toast.info(`Fetching weather data for ${capitalizeFirstletter(cityName)}`);
 
     await getFormattedWeatherData({ ...query, units }).then((data) => {
       toast.success(`Fetched weather data for ${data.name}, ${data.country}`);
       setWeather(data);
     });
-    console.log(data);
   };
 
   useEffect(() => {
@@ -41,7 +40,7 @@ const App = () => {
 
   return (
     <div
-      className={`mx-auto max-w-screen-lg mt-4 py-5 px-32 bg-gradient-to-br shadow-xl shadow-gray-400 text-white ${formatBackground()}`}
+      className={`mx-auto max-w-screen-md mt-4 py-4 px-6 sm:px-4 bg-gradient-to-br shadow-lg shadow-gray-600 text-white mb-8 ${formatBackground()}`}
     >
       <TopButtons setQuery={setQuery} />
       <Inputs setQuery={setQuery} setUnits={setUnits} />
@@ -49,8 +48,8 @@ const App = () => {
         <>
           <TimeAndLocation weather={weather} />
           <TempAndDetails weather={weather} units={units} />
-          <Forecast title="3 hour step forecast" data={weather.hourly} />
-          <Forecast title="daily forecast" data={weather.daily} />
+          <Forecast title="3-hour step forecast" data={weather.hourly} />
+          <Forecast title="Daily forecast" data={weather.daily} />
         </>
       )}
 

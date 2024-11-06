@@ -18,14 +18,14 @@ const Inputs = ({ setQuery, setUnits }) => {
   };
 
   return (
-    <div className="flex flex-row justify-center my-6">
-      <div className="flex flex-row w-3/4 items-center justify-center space-x-4">
+    <div className="flex flex-col md:flex-row justify-center items-center my-6 space-y-4 md:space-y-0 md:space-x-4">
+      <div className="flex flex-row w-full md:w-3/4 items-center justify-center space-x-4">
         <input
           value={city}
           onChange={(e) => setCity(e.currentTarget.value)}
           type="text"
           placeholder="search by city..."
-          className="text-gray-500 text-xl font-light p-2 w-full shadow-xl capitalize focus: outline-none placeholder: lowercase"
+          className="text-gray-500 text-xl font-light p-2 w-full shadow-xl capitalize focus:outline-none placeholder:lowercase"
         />
 
         <BiSearch
@@ -39,7 +39,7 @@ const Inputs = ({ setQuery, setUnits }) => {
           onClick={handleLocationClick}
         />
       </div>
-      <div className="flex flex-row w-1/4 items-center justify-center">
+      <div className="flex flex-row w-full md:w-1/4 items-center justify-center space-x-4">
         <button
           className="text-2xl font-medium transition ease-out hover:scale-125"
           onClick={() => setUnits('metric')}
@@ -47,7 +47,7 @@ const Inputs = ({ setQuery, setUnits }) => {
           °C
         </button>
 
-        <p className="text-2xl font-medium mx-1">|</p>
+        <p className="text-2xl font-medium">|</p>
 
         <button
           className="text-2xl font-medium transition ease-out hover:scale-125"

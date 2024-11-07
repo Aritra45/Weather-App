@@ -9,24 +9,41 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Footer';
 
-function capitalizeFirstletter(string) {
+function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const App = () => {
-  const [query, setQuery] = useState({ q: 'kolkata' });
+  const [query, setQuery] = useState({}); // Start with an empty query
   const [units, setUnits] = useState('metric');
   const [weather, setWeather] = useState(null);
 
   const getWeather = async () => {
-    const cityName = query.q ? query.q : 'Current Location';
-    toast.info(`Fetching weather data for ${capitalizeFirstletter(cityName)}`);
+    const location =
+      query.q || (query.lat && query.lon ? 'Current Location' : 'Kolkata');
+    toast.info(`Fetching weather data for ${capitalizeFirstLetter(location)}`);
 
     await getFormattedWeatherData({ ...query, units }).then((data) => {
       toast.success(`Fetched weather data for ${data.name}, ${data.country}`);
       setWeather(data);
     });
   };
+
+  const fetchUserLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setQuery({ lat: latitude, lon: longitude });
+      },
+      (error) => {
+        console.error('Geolocation permission denied. Using default location.');
+        setQuery({ q: 'Kolkata' });
+      }
+    );
+  };
+
+  useEffect(() => {
+    fetchUserLocation();
+  }, []);
 
   useEffect(() => {
     getWeather();
@@ -35,8 +52,9 @@ const App = () => {
   const formatBackground = () => {
     if (!weather) return 'from-cyan-600 to-blue-700';
     const threshold = units === 'metric' ? 20 : 60;
-    if (weather.temp <= threshold) return 'from-cyan-600 to-blue-700';
-    return 'from-yellow-600 to-orange-700';
+    return weather.temp <= threshold
+      ? 'from-cyan-600 to-blue-700'
+      : 'from-yellow-600 to-orange-700';
   };
 
   return (

@@ -20,12 +20,20 @@ const App = () => {
 
   const getWeather = async () => {
     const location =
-      query.q || (query.lat && query.lon ? 'Current Location' : 'Kolkata');
-    toast.info(`Fetching weather data for ${capitalizeFirstLetter(location)}`);
+      query.q || (query.lat && query.lon ? 'Current Location' : '');
+    toast.info(
+      `Fetching weather data for ${capitalizeFirstLetter(
+        location || 'Current Location'
+      )}`
+    );
 
     await getFormattedWeatherData({ ...query, units }).then((data) => {
-      toast.success(`Fetched weather data for ${data.name}, ${data.country}`);
-      setWeather(data);
+      if (data) {
+        toast.success(`Fetched weather data for ${data.name}, ${data.country}`);
+        setWeather(data);
+      } else {
+        toast.error('Unable to fetch weather data');
+      }
     });
   };
 

@@ -8,7 +8,7 @@ const Footer = () => {
           Download Weather Reporter From GitHub
         </p>
         <a
-          href="https://github.com/Aritra45/Weather-App/releases/download/v1.0/WeatherReporter.apk"
+          href="https://github.com/Aritra45/Weather-App/releases/download/v2.0/WeatherReporter.apk"
           target="_blank"
           rel="noopener noreferrer"
         >
